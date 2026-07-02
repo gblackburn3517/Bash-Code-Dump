@@ -1,0 +1,25 @@
+Case Practice Blurb
+
+#!/bin/bash
+
+echo "Give me a number 1-4"
+
+read $number
+
+case $number in
+    1)
+        echo "Red"
+        ;;
+    2)
+        echo "Green"
+        ;;
+    3)
+        echo "Blue"
+        ;;
+    4)
+        echo "Yellow"
+        ;;
+    *)
+        echo "Invalid input. Please enter a number between 1 and 4."
+        ;;
+esac
