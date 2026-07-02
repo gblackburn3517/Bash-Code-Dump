@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#Generate a random number and return the associated response to a user input
+
+min=1
+max=9
+
+echo "I know everything, and I can tell you whether or not something will happen. Would you like to ask a question?"
+read Question
+while [[ "$Question" != "no" && "$Question" != "No" && "$Question" != "No." ]]; do response=$((RANDOM % (max-min + 1) + min))
+if [[ "$Question" == "yes" || "$Question" == "Yes" || "$Question" == "Yes." ]]; then echo "Then ask."
+else case $response in
+    1) echo "You're more likely to grow wings.";;
+    2) echo "It would take a miracle.";;
+    3) echo "Almost definitely not.";;
+    4) echo "It could go either way...but I won't be betting on it.";;
+    5) echo "Whichever answer you're hoping for...it's not that one.";;
+    6) echo "You really want me to say yes, don't you?";;
+    7) echo "...you really don't want me to answer that";;
+    8) echo "Don't ask stupid questions.";;
+    9) echo "If you want it bad enough...actually never mind. It won't make a difference."
+esac 
+fi
+sleep 1
+echo "Would you like to ask another question?"
+read Question
+done
+echo "I knew you would say that."
