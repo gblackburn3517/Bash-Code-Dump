@@ -1,0 +1,39 @@
+Epic Animals
+
+#!/bin/bash
+
+echo "Tell me an animal"
+
+read animal
+
+if [ $animal = 'cat' ];
+then
+    echo MEOW
+    
+elif [ $animal == 'dog' ];
+then
+    echo WOOF
+    
+elif [ $animal == 'cow' ];
+then
+    echo MOO
+    
+elif [ $animal == 'horse' ];
+then
+    echo NEIGH
+    
+elif [ $animal == 'owl' ];
+then
+    echo HOOT HOOT
+    
+elif [ $animal == 'pig' ];
+then
+    echo OINK
+    
+elif [ $animal == 'coelacanth' ];
+then
+    echo SEE-YA-LATER
+    
+else
+    echo That animal does not have an epic sound. Prove me wrong.
+fi
