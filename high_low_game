@@ -1,0 +1,72 @@
+#!/bin/bash
+#A game of high low with the idea that the computer has drawn from a deck of cards to get the number. There are 5 rounds, 3 guesses per round, and it's best 3/5.
+#The game works, but I still can't enter a face card value without getting an error message.
+
+#Set minimum and maximum values
+min=1
+max=13
+
+#Declare the face value cards. You need to do two separate arrays to reverse map the values. This lets the user and program understand they're talking about the same things.
+#I am also going to normalize the input in order to limit issues with capitalizations and lower casing.
+declare -A card_name
+card_name[1]="Ace"
+card_name[11]="Jack"
+card_name[12]="Queen"
+card_name[13]="King"
+
+declare -A name_card
+name_card["ace"]=1
+name_card["jack"]=11
+name_card["queen"]=12
+name_card["king"]=13
+
+normalize_input ()
+{ local input="$1"
+input=$(echo "$input" | tr '[:upper:]' '[:lower:]' | tr -d '.')
+echo "$input" }
+
+#Declaring the rules of the game to the user
+echo "Pay attention now."
+echo "I'm going to draw a card from a standard deck of 52 cards, and you will have three chances to guess what it is."
+echo "If your guess is lower or higher than the card I've drawn, I'll let you know"
+echo "If you guess the card correctly 3 out of 5 times, then you win the game. If you don't, then I win."
+echo "I'll be putting the card back in the deck and shuffling after every round."
+echo "Don't worry about the suit. I have a feeling this game will challenge you enough as is. Oh, but do feel free to dazzle me with your... brilliance."
+
+#Setting up the game loop
+correct_guesses=0 #Putting it here resets the correct guesses for the whole game.
+
+for i in {1..5}; do 
+    card=$((RANDOM % (max - min + 1) + min))
+    echo "Round $i. I've drawn a card, you may begin."
+    guess_count=0
+    
+    while [ $guess_count -lt 3 ]; do read guess
+    normalized_input=$(normalize_input "$guess")
+
+    #Convert the name to a value if the name is valid, then validate Input, in case of a wrong input value
+    if [[ -n ${name_card[$normalized_input]} ]]; then guess=${name_card[$normalized_input]}
+    elif ! [[ "$normalized_input" =~ ^[0-9]+$ ]] || [ "$normalized_input" -lt 1 ] || [ "$normalized_input" -gt 13 ];
+    then echo "Have you never seen a playing card before? You can type in either the numbers 2-10, or the face cards Ace, Jack, Queen, or King. Ridiculous."
+    continue
+    fi
+
+    #Conditions for game round
+    if [ $guess -lt $card ]; then echo "Too low."
+    elif [ $guess -gt $card ]; then echo "Too high."
+    else echo "Very good, you guessed correctly"
+    correct_guesses=$((correct_guesses + 1))
+    break
+    fi
+    guess_count=$((guess_count + 1))
+done
+
+#Condition for round loss
+if [ $guess_count -eq 3 ]; then echo "Oh dear, that was your third guess, so I win this round. The card was actually ${card_name[$card]:-$card}."
+fi
+done
+
+#Conditions for game win or loss
+if [ $correct_guesses -ge 3 ]; then echo "Well well, you've guessed correctly $correct_guesses times, so that means you win. I'll admit, I'm impressed."
+else echo "It seems you've only guessed the card $correct_guesses out of 5 times. That means I win. What a surprise."
+fi
