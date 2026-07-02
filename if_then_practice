@@ -1,0 +1,25 @@
+If Then Practice Blurb
+
+#!/bin/bash
+
+echo "Give me a number 1-5"
+
+read Number
+
+if [ $Number = '1' ]; then echo "yes"
+
+elif [ $Number == '2' ]; then echo "no"
+
+elif [ $Number == '3' ]; then echo "sure"
+
+elif [ $Number == '4' ]; then echo "you could do better"
+
+elif [ $Number == '5' ]; then echo "how original"
+
+elif [ $Number == '420' ]; then echo "find Jesus"
+
+elif [ $Number == '69' ]; then echo "really? There are kids around"
+
+else echo "learn to read"
+
+fi
